@@ -1,0 +1,4 @@
+assembly graph
+assembly graph with scaffolds
+contigs
+scaffolds

@@ -1,0 +1,13 @@
+#creating External HD mount
+  sudo mkdir -p /mnt/f
+  sudo mount -t drvfs F: /mnt/f -o metadata
+
+#Running abyss on paired end reads
+  abyss-pe name=NEEDNAME k=96 B=2G in='NAME.fastq.gz NAME.fastq.gz'
+
+  EXAMPLE = abyss-pe name=Salmonellasequences k=96 B=2G in='reads1.fastq.gz reads2.fastq.gz'
+
+INPUTED: abyss-pe name=abyssoutput_April9 k=96 B=2G in='Mine_R1.fastq.gz Mine_R2.fastq.gz'
+
+****Running abyss on homedesktop
+#/mnt/c/users/charles/desktop/homedesktopworkbioinformatics/AByss output COPY TO F DRIVE

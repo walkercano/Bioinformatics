@@ -1,0 +1,12 @@
+#Qiime2 codes
+
+  $activate qiime2-amplicon-2024.2
+
+..To Activate/deactivate an active environment, use
+  $ Mamba or conda activate
+  $ Mamba or conda deactivate
+
+  $qiime tools import \
+  --type EMPSingleEndSequences \
+  --input-path emp-single-end-sequences \
+  --output-path emp-single-end-sequences.qza

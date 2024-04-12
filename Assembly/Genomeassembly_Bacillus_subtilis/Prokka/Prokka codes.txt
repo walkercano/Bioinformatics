@@ -1,0 +1,11 @@
+Code for Prokka
+
+Call program -> prokka
+--outdir (NAME) -> create output directory (name what you want)
+--preix (species name) -> give files a (prefix name)
+---->location of files we want annotated 
+
+prokka --outdir prokkaannotation --prefix Bacillus_subtilis abyssoutput_April9-8.fa
+
+
+https://github.com/tseemann/prokka
