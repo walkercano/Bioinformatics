@@ -1,0 +1,78 @@
+---
+title: "Phyloseq"
+author: "Charles"
+date: "2024-04-23"
+output: pdf_document
+---
+
+# Load required packages
+```{r}
+library(phyloseq)
+library(dplyr)
+library(readr)
+library(BiMiCo)
+library(MicEco)
+library(vegan)
+library(devtools)
+library(ggplot2)
+library(ape)
+```
+
+```{r}
+load("RData/taxa.RData")
+load ("RData/seqtab.nochim.RData")
+```
+
+# import metadata
+```{r}
+metadata<- read.csv("metadata.csv", header = TRUE, row.names = 1)
+```
+
+# create phyloseq object
+```{r}
+#make sure the seqtab.nochim and taxa objects are loaded
+#create a function called phyloseq. otu_table is from seq table nochim. Sample data found in metadata file. It makes a taxonomy table, too. combine seq data metadata, and +++ into one file called physeq 
+physeq <- phyloseq(otu_table(seqtab.nochim, taxa_are_rows=FALSE),
+                   sample_data(metadata),
+                   tax_table(taxa))
+physeq
+```
+# now we have the raw no. of reads associated w each spp. Like we have 1,000 reads for staph. and 50 enterococc
+
+# transform sample counts. turn raw numbers into percentages so we can compare
+```{r}
+# convert from raw to abundance
+physeq <- transform_sample_counts(physeq, function(abund) 1*(abund>0))
+physeq
+```
+# right now our file has the raw sequencing read (ATCG).
+
+# Remove the sequence itself and replace with ASV. This will pull out the actual sequences into a different line
+# this will make it so that the computer does not refer to each sequence in terms of ATCG, it will refer to each seq as "sequence 1" or whatever.
+```{r}
+dna <- Biostrings::DNAStringSet(taxa_names(physeq))
+names(dna) <- taxa_names(physeq)
+physeq <- merge_phyloseq(physeq, dna)
+taxa_names(physeq) <- paste0("ASV", seq(ntaxa(physeq)))
+physeq
+```
+
+# remove mitochondria and chloroplast matches. remove all nonbacterial sequences. Remember we took samples from 2 different at different parts of their bodies at different times over time.
+# takes object physeq. looks in it to find any sample that has the family as mitochondria or the order as chloroplast. Subset taxa is pulling anything out that matches Mitochondria or chloroplast and its leaving anything else
+```{r}
+physeq <- physeq %>% subset_taxa( Family!= "Mitochondria" | is.na(Family) &
+Order!="Chloroplast" | is.na(Order) )
+physeq
+```
+# we used to have 771 taxa. Now we have 742. ~31 were mt or chlororplast sequences
+
+# remove all non bacterial sequences (archaea)
+```{r}
+physeq<-rm_nonbac(physeq)
+physeq
+```
+
+# save physeq objects to load later
+```{r}
+save(physeq, file="RData/physeq.RData")
+```
