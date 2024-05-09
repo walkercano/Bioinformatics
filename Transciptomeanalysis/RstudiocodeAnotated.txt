@@ -1,0 +1,127 @@
+
++ = Answer
+
+
+# What is this code doing?
+
++This code is creating a specimen id column and a column of values that you specify. 
+
+
+  This code is creating a specimen id column and a column of values that you specify. 
+```{r}
+pheno_data<-data.frame(ids = c("plank01", "plank02", "biofilm01", "biofilm02"),
+                       stage = c("planktonic", "planktonic", "biofilm", "biofilm"))
+```
+
+
+
+# <what is this code doing?>
++Filters and displays data frames greater than 1.
+
+```{r}
+bg_filt = subset(bg,"rowVars(texpr(bg)) >1",genomesubset=TRUE)
+bg_filt
+```
+
+# choose a transcript to examine more closely (this is a demo, you need to choose another)
+
+
+```{r}
+results_transcripts[results_transcripts$transcriptNames == "gene-PA0004", ]
+```
+
++Transcript that is examined at a closer look is gene-PA0004. 
+The transcripts yields data of the gene name, feature, id# and fc value of 1.735612e+15.
+
+
+
+# insert brief explanation of this code>
++This code is filtering rows with a p-value that is less than 0.05. This means that with the product of the filtered rows they will all be significant.
+
+```{r}
+sigdiff <- results_transcripts %>% filter(pval<0.05)
+dim(sigdiff)
+```
+
+# organize the table <by what metrics is the table being organized?>
++The matrix that is being used is matrix pva1 column in a increasing order within each identical group.
+
+```{r}
+o = order(sigdiff[,"pval"], -abs(sigdiff[,"fc"]), decreasing=FALSE)
+output = sigdiff[o,c("geneNames","transcriptNames", "id","fc","pval","qval")]
+write.table(output, file="SigDiff.txt", sep="\t", row.names=FALSE, quote=FALSE)
+head(output)
+```
+
+
+# <what is this code doing? hint:compare the above output of head(gene_expression) to this output>
+
++This code filters and assigns new columns to the gene expression as well as the demensions of the data frame.
+
+```{r}
+colnames(gene_expression) <- c("plank01", "plank02", "biofilm01", "biofilm02")
+head(gene_expression)
+dim(gene_expression)
+```
+
+
+
+# plot the number of transcripts per gene
+```{r}
+counts=table(transcript_gene_table[,"g_id"])
+c_one = length(which(counts == 1))
+c_more_than_one = length(which(counts > 1))
+c_max = max(counts)
+hist(counts, breaks=50, col="red", xlab="Transcripts per gene",
+main="Distribution of transcript count per gene")
+legend_text = c(paste("Genes with one transcript =", c_one),
+paste("Genes with more than one transcript =", c_more_than_one),
+paste("Max transcripts for single gene = ", c_max))
+legend("topright", legend_text, lty=NULL)
+
++The graph above is plotting the number of transcripts per gene. The majority of the transcripts are taking place 1-2.
+
+
+
+
+# create a plot of how similar the two replicates are for one another. We have two data sets...how can you modify this code in another chunk to create a plot of the other set?
+
++The code can be modified by changing x = gene_expression[,"plank01"]
+y = gene_expression[,"plank02"] to x = gene_expression[,"biofilm01"]
+y = gene_expression[,"biofilm02"]. This will allow you to display two graphs to compare. 
+
+
+#What does it mean if the two data sets are similar?
+
++When two datasets are similiar they exhibit the same patterns or characteristics that are comparable
+
+
+
+
+
+## interpret the above figure:
++The graph is showing a histogram that represents distribution of the differential expression values between the biofilm and planktonic sample stages. 
+	The samples shown are expressed because they are calculated as being significant. This will aid researchers in looking at magnitude and direction of gene expression between the two stages.
+
+
+
+# interpret the above figure
+The graph above is visualizing gene expression at different stages for biofilm and planktonic with an emphasis on the gene that I selected which was gene 24 (aroE/gene-PA0025).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
