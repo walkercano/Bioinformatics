@@ -1,0 +1,67 @@
+Presentation notes to present
+*What is my bacteria 
+*Why I chose this
+
+
+N50
+UNITIG
+SCAFFOLD
+CONTIG
+how complete my genome is according to BUSCO output form abyss
+compare abyss to spades with QUAST
+show graghs
+
+
+
+
+
+
+
+Downloaded Zipped files from Dr. Van Laar. 
+	File name FinalProject_GenomeAssemblyAnnotation
+
+#Unzipping the file
+$gunzip /Charles.zip/*.gz (DOESNT WORK)
+
+
+#genome assembly using abyss
+	Installing abyss 
+$mamba install -c bioconda -c conda-forge abyss
+
+
+#Assemblying Sequnces
+$abyss-pe name=finalprojectSalinibacter k=96 B=2G in='reads1.fastq.gz reads2.fastq.gz'
+
+#After Abyss finishes
+	Upload data to galaxy
+	once data is uplaoded... 
+
+1. Run Spades on Galaxy
+	to run select:
+	1. pair end reads: individual data set
+	2. select reads 1 and reads 2 from downloaded data set that I uploaded
+	3. leave default and 
+	**run tool**
+	After SPAdes finshes
+	1.Download assembly graph
+	2.Assembly graph with Scaffolds
+	3.Contigs
+	4.scaffolds
+	**Move everything from SPAdes into new folder. 
+
+#Quality Control on Galaxy
+	to run Quast select:
+	1.individual assembly
+	2.select scaffolds--should allow to select it because its in there from previous run
+	3.type of assembly: genome assembly
+	4.Use reference genome
+	*NEED to find one
+		go to NCBI
+		*type species name in search bar and hit search.
+			1.must select one with the star.
+				a.download reference genome
+					1.genome sequence fasta
+					2.GFF file
+					*name it reference species name
+
+	

@@ -1,0 +1,5 @@
+n    |n:500  |L50  |min  |N75    |N50     |N25     |E-size  |max     |sum      |name
+---  |---    |---  |---  |---    |---     |---     |---     |---     |---      |---
+543  |108    |13   |520  |43141  |81723   |172845  |133607  |436187  |3764328  |finalprojectSalinibacter-unitigs.fa
+488  |62     |7    |590  |79612  |149167  |341317  |204481  |437425  |3790024  |finalprojectSalinibacter-contigs.fa
+433  |42     |5    |590  |86810  |361772  |371897  |261882  |437425  |3793219  |finalprojectSalinibacter-scaffolds.fa
